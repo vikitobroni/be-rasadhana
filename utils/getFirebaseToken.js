@@ -25,7 +25,6 @@
 
 const admin = require('firebase-admin');
 
-// Inisialisasi Firebase Admin SDK
 const serviceAccount = require('../config/serviceAccountKey.json');
 
 admin.initializeApp({
@@ -34,7 +33,6 @@ admin.initializeApp({
 
 async function getToken() {
   try {
-    // Membuat token kustom untuk pengguna dengan UID tertentu (contoh UID)
     const customToken = await admin.auth().createCustomToken('test-user-uid');
     console.log('Custom Token:', customToken);
   } catch (error) {
