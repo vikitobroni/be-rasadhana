@@ -4,8 +4,13 @@ import { User } from '../db/user.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+// import SwaggerUI from 'swagger-ui';
 
 const router = express.Router();
+
+// SwaggerUI({
+//   dom_id: '#myDomId',
+// });
 
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -26,7 +31,7 @@ router.post('/register', async (req, res) => {
       email: email,
       password: encryptedPassword,
     });
-    res.send({ status: 'ok', data: 'User telah didaftarkan' });
+    res.send({ status: 'Success', data: 'User telah didaftarkan' });
   } catch (error) {
     res.send({ status: 'error', data: error });
   }
@@ -44,7 +49,7 @@ router.post('/login-user', async (req, res) => {
 
   if (validPassword) {
     const token = jwt.sign({ email: oldUser.email }, process.env.JWT_SECRET);
-    return res.send({ status: 'ok', data: token });
+    return res.send({ status: 'Login Success', data: token });
   } else {
     return res.send({ data: 'Password anda salah' });
   }
