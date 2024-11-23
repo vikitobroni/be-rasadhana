@@ -4,7 +4,7 @@ Jalankan perintah berikut untuk menginstal dependensi:
 
 ```bash
 npm install
-# or
+# atau
 npm i
 ```
 
@@ -16,85 +16,137 @@ Untuk menjalankan aplikasi, gunakan perintah berikut:
 npm start
 ```
 
-## On Development.
+## On Development
 
-ROUTE POST REGISTER:
-http://localhost:33000/auth/register
+Berikut adalah daftar endpoint beserta request dan response yang tersedia dalam aplikasi ini:
 
-request:
+### 1. **Register User**
+**URL:** `POST /auth/register`  
+**Endpoint:** [http://localhost:33000/auth/register](http://localhost:33000/auth/register)  
+**Request:**
+```json
 {
-"name": "",
-"email": "",
-"password": ""
+  "name": "",
+  "email": "",
+  "password": ""
 }
-response:
+```
+**Response:**
+```json
 {
-"status": "Success",
-"data": "User telah didaftarkan"
+  "status": "Success",
+  "data": "User telah didaftarkan"
 }
+```
 
-ROUTE LOGIN USER (POST):
-http://localhost:33000/auth/login-user
-request:
-{
-"email": "",
-"password": ""
-}
-response:
-{
-"message": "Login success",
-"data": ""
-}
+---
 
-ROUTE GET USER DATA (POST):
-http://localhost:33000/auth/userdata
-request:
+### 2. **Login User**
+**URL:** `POST /auth/login-user`  
+**Endpoint:** [http://localhost:33000/auth/login-user](http://localhost:33000/auth/login-user)  
+**Request:**
+```json
 {
-"token" : ""
+  "email": "",
+  "password": ""
 }
-response:
+```
+**Response:**
+```json
 {
-"status": "ok",
-"data": {
-"\_id": "6741b6fc61ae0a167581214e",
-"name": "Julio",
-"email": "juliosp2107@gmail.com",
-"password": "$2b$10$1e53JamkTVau7fAfQwhi9.SyBNloHjR1pqjI7kOV0Z9ioVDV4tvfG",
-"\_\_v": 0,
-"resetToken": "24938"
+  "message": "Login success",
+  "data": ""
 }
-}
+```
 
-ROUTE FORGOT PASSWORD (POST):
-http://localhost:33000/auth/forgot-password
-request:
-{
-"email" :
-}
-response:
-{
-"status": true,
-"message": "email sent",
-"token": "24938"
-}
+---
 
-ROUTE RESET PASSWORD (POST):
-http://localhost:33000/auth/reset-password
-request:
+### 3. **Get User Data**
+**URL:** `POST /auth/userdata`  
+**Endpoint:** [http://localhost:33000/auth/userdata](http://localhost:33000/auth/userdata)  
+**Request:**
+```json
 {
-"token" : ,
-"newPassword" : ""
+  "token": ""
 }
-response:
+```
+**Response:**
+```json
 {
-"success": true,
-"message": "Password berhasil direset"
+  "status": "ok",
+  "data": {
+    "_id": "6741b6fc61ae0a167581214e",
+    "name": "Julio",
+    "email": "juliosp2107@gmail.com",
+    "password": "$2b$10$1e53JamkTVau7fAfQwhi9.SyBNloHjR1pqjI7kOV0Z9ioVDV4tvfG",
+    "__v": 0,
+    "resetToken": "24938"
+  }
 }
+```
 
-ROUTE UPDATE USER BYID (POST):
-http://localhost:33000/auth/update/:userId
-request:
+---
+
+### 4. **Forgot Password**
+**URL:** `POST /auth/forgot-password`  
+**Endpoint:** [http://localhost:33000/auth/forgot-password](http://localhost:33000/auth/forgot-password)  
+**Request:**
+```json
 {
-"nama" : "",
-"email" : ""
+  "email": ""
 }
+```
+**Response:**
+```json
+{
+  "status": true,
+  "message": "email sent",
+  "token": "24938"
+}
+```
+
+---
+
+### 5. **Reset Password**
+**URL:** `POST /auth/reset-password`  
+**Endpoint:** [http://localhost:33000/auth/reset-password](http://localhost:33000/auth/reset-password)  
+**Request:**
+```json
+{
+  "token": "",
+  "newPassword": ""
+}
+```
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Password berhasil direset"
+}
+```
+
+---
+
+### 6. **Update User by ID**
+**URL:** `PATCH /auth/update/:userId`  
+**Endpoint:** [http://localhost:33000/auth/update/:userId](http://localhost:33000/auth/update/:userId)  
+**Request:**
+```json
+{
+  "name": "",
+  "email": ""
+}
+```
+**Response:**
+```json
+{
+  "message": "Berhasil update",
+  "user": {
+    "_id": "6741b6fc61ae0a167581214e",
+    "name": "Updated Name",
+    "email": "updated_email@gmail.com"
+  }
+}
+```
+
+---
