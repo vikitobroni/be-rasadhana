@@ -27,6 +27,7 @@ request:
   "email": "",
   "password": ""
 }
+
 response:
 {
   "status": "Success",
@@ -35,11 +36,13 @@ response:
 
 ROUTE LOGIN USER (POST):
 http://localhost:33000/auth/login-user
+
 request:
 {
   "email": "",
   "password": ""
 }
+
 response:
 {
   "message": "Login success",
@@ -48,10 +51,12 @@ response:
 
 ROUTE GET USER DATA (POST):
 http://localhost:33000/auth/userdata
+
 request:
 {
   "token" : ""
 }
+
 response:
 {
   "status": "ok",
@@ -67,10 +72,12 @@ response:
 
 ROUTE FORGOT PASSWORD (POST):
 http://localhost:33000/auth/forgot-password
+
 request:
 {
   "email" :
 }
+
 response:
 {
   "status": true,
@@ -80,11 +87,13 @@ response:
 
 ROUTE RESET PASSWORD (POST):
 http://localhost:33000/auth/reset-password
+
 request:
 {
   "token" : ,
   "newPassword" : ""
 }
+
 response:
 {
   "success": true,
@@ -93,6 +102,7 @@ response:
 
 ROUTE UPDATE USER BYID (POST):
 http://localhost:33000/auth/update/:userId
+
 request:
 {
   "nama" : "",
