@@ -23,7 +23,7 @@ mongoose
 app.use('/auth', UserRouter);
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the API Rasadhana versi 1.0');
+  res.send('Welcome to the API Rasadhana versi 1.0.0');
 });
 
 app.listen(PORT, () => {

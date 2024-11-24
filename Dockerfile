@@ -14,10 +14,10 @@ RUN npm install --production
 COPY . .
 
 # Expose port sesuai dengan port yang digunakan oleh aplikasi Express
-EXPOSE 33000
+EXPOSE 8080
 
 # Tentukan environment variable PORT
-ENV PORT=33000
+ENV PORT=8080
 
 # Jalankan aplikasi saat container dijalankan
 CMD ["npm", "run", "start"]
