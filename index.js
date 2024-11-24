@@ -22,6 +22,10 @@ mongoose
 
 app.use('/auth', UserRouter);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the API Rasadhana');
+});
+
 app.listen(PORT, () => {
   console.log(`server running in http://localhost:${PORT}`);
 });
