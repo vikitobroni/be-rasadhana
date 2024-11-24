@@ -14,13 +14,13 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
-  const oldEmailUser = await User.findOne({ email: email });
-  const oldNamelUser = await User.findOne({ name: name });
+  const oldEmailUser = await User.findOne({ email });
+  const oldNamelUser = await User.findOne({ name });
 
   if (oldNamelUser) {
-    return res.send({ data: 'Nama sudah digunakan' });
+    return res.send({success: false, message: 'Nama sudah digunakan' });
   } else if (oldEmailUser) {
-    return res.send({ data: 'Email sudah digunakan' });
+    return res.send({success: false, message: 'Email sudah digunakan' });
   }
 
   const encryptedPassword = await bcryt.hash(password, 10);
@@ -31,27 +31,27 @@ router.post('/register', async (req, res) => {
       email: email,
       password: encryptedPassword,
     });
-    res.send({ status: 'Success', data: 'User telah didaftarkan' });
+    res.send({success: true, message: 'User telah didaftarkan' });
   } catch (error) {
-    res.send({ status: 'error', data: error });
+    res.send({success: false, message: error });
   }
 });
 
 router.post('/login-user', async (req, res) => {
   const { email, password } = req.body;
-  const oldUser = await User.findOne({ email: email });
+  const oldUser = await User.findOne({ email });
 
   if (!oldUser) {
-    return res.send({ data: 'Email Tidak terdaftar' });
+    return res.send({success: false, message: 'Email Tidak terdaftar' });
   }
 
   const validPassword = await bcryt.compare(password, oldUser.password);
 
   if (validPassword) {
     const token = jwt.sign({ email: oldUser.email }, process.env.JWT_SECRET);
-    return res.send({ status: 'Login Success', data: token });
+    return res.send({success: true, message: "Login berhasil", data: token });
   } else {
-    return res.send({ data: 'Password anda salah' });
+    return res.send({success: false, message: 'Password anda salah' });
   }
 });
 
@@ -62,12 +62,13 @@ router.post('/userdata', async (req, res) => {
     const useremail = user.email;
 
     const userData = await User.findOne({ email: useremail });
+
     if (!userData) {
-      return res.status(404).send({ error: 'User not found' });
+      return res.status(404).send({success: false, message: 'User not found' });
     }
-    return res.send({ status: 'ok', data: userData });
+    return res.send({ success: true, data: userData });
   } catch (error) {
-    return res.status(500).send({ error: error.message });
+    return res.status(500).send({success: false, message: error.message });
   }
 });
 
@@ -77,7 +78,7 @@ router.patch('/update/:userId', async (req, res) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+      return res.status(404).json({success: false, message: 'Pengguna tidak ditemukan' });
     }
 
     if (req.body.email) {
@@ -88,9 +89,10 @@ router.patch('/update/:userId', async (req, res) => {
     }
 
     await user.save();
-    res.status(201).json({ user, message: 'Berhasil update' });
+
+    res.status(201).json({success: true, user, message: 'Berhasil update' });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({success: false, message: err.message });
   }
 });
 
@@ -99,7 +101,7 @@ router.post('/forgot-password', async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: 'Email tidak terdaftar' });
+      return res.status(404).json({success: false, message: 'Email tidak terdaftar' });
     }
     const token = crypto.randomInt(10000, 99999).toString();
 
@@ -123,9 +125,9 @@ router.post('/forgot-password', async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        return res.json({ message: 'error mengirim email' });
+        return res.json({ success: false, message: 'error mengirim email' });
       } else {
-        return res.json({ status: true, message: 'email sent', token: token });
+        return res.json({ success: true, message: 'email sent', token });
       }
     });
   } catch (err) {
@@ -140,7 +142,7 @@ router.post('/reset-password', async (req, res) => {
     const user = await User.findOne({ resetToken: token });
 
     if (!user) {
-      return res.status(400).json({ error: 'invalid reset token' });
+      return res.status(400).json({success: false, message: 'invalid reset token' });
     }
 
     const encryptedPassword = await bcryt.hash(newPassword, 10);
@@ -153,7 +155,7 @@ router.post('/reset-password', async (req, res) => {
       .json({ success: true, message: 'Password berhasil direset' });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Gagal mereset password' });
+    return res.status(500).json({success: false, message: 'Gagal mereset password' });
   }
 });
 

@@ -23,5 +23,5 @@ mongoose
 app.use('/auth', UserRouter);
 
 app.listen(PORT, () => {
-  console.log(`server running in port ${PORT}`);
+  console.log(`server running in http://localhost:${PORT}`);
 });
