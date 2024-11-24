@@ -66,7 +66,7 @@ router.post('/userdata', async (req, res) => {
     if (!userData) {
       return res.status(404).send({success: false, message: 'User not found' });
     }
-    return res.send({ success: false, data: userData });
+    return res.send({ success: true, data: userData });
   } catch (error) {
     return res.status(500).send({success: false, message: error.message });
   }
