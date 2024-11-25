@@ -4,11 +4,13 @@ FROM node:18
 # Set working directory di dalam container
 WORKDIR /app
 
+# Tentukan environment variable PORT
+ENV PORT=8080
+
 # Salin package.json dan package-lock.json (jika ada)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production
+RUN npm install
 
 # Salin seluruh kode aplikasi ke dalam container
 COPY . .
@@ -16,8 +18,6 @@ COPY . .
 # Expose port sesuai dengan port yang digunakan oleh aplikasi Express
 EXPOSE 8080
 
-# Tentukan environment variable PORT
-ENV PORT=8080
-
 # Jalankan aplikasi saat container dijalankan
 CMD ["npm", "run", "start"]
+
